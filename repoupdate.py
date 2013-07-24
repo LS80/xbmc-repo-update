@@ -185,7 +185,10 @@ if __name__ == '__main__':
                         help="path to the root of the add-on source directory")
     parser.add_argument('-r', '--repo',
                         help="path to the root of the repository")
+    parser.add_argument('-f', '--force', action='store_true',
+                        help="force update of the addons")
+    
     args = parser.parse_args()
 
     repo = RepoUpdate(args.source, args.repo)
-    repo.update()
+    repo.update(args.force)
