@@ -110,20 +110,20 @@ class RepoUpdate(object):
         if source_root is None:
             self.source_root = os.getcwd()
         else:
-            self.source_root = os.path.normpath(source_root)
+            self.source_root = os.path.abspath(source_root)
             try:
                 os.chdir(source_root)
             except OSError:
                 print("Source directory does not exist: {}".format(source_root))
-		sys.exit(1) 	
+                sys.exit(1) 	
         
         if repo_root is None:
             self.repo_root = os.path.join(os.path.expanduser('~'),
-                 	                  'Dropbox', 'Public', 'Repo')
+                                          'Dropbox', 'Public', 'Repo')
         else:
-            self.repo_root = os.path.normpath(repo_root)
+            self.repo_root = os.path.abspath(repo_root)
           
-	xml_path = os.path.join(self.repo_root, 'addons.xml')  
+        xml_path = os.path.join(self.repo_root, 'addons.xml')  
         try:
             self._xml = ET.parse(xml_path).getroot()
         except IOError:
