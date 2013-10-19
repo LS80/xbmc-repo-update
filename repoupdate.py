@@ -43,6 +43,9 @@ import hashlib
 import xml.etree.ElementTree as ET
 import argparse
 
+def version_parts(version):
+    return [int(p) for p in version.split('.')]
+
 class Addon(object):
     """ A class representing an add-on in the source directory """
 
@@ -51,12 +54,13 @@ class Addon(object):
     def __init__(self, xml_file):
         self.tree = ET.parse(xml_file).getroot()
         self.id = self.tree.attrib['id']
-        self.version = self.tree.attrib['version']
+        self.version_str = self.tree.attrib['version']
+        self.version = version_parts(self.version_str)
         
         self._path = os.path.dirname(xml_file)
     
     def __str__(self):
-        return '{}-{}'.format(self.id, self.version)
+        return '{}-{}'.format(self.id, self.version_str)
     
     def _create_zip(self, zip_path):
         z = zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED)
@@ -88,7 +92,7 @@ class Addon(object):
         try:
             shutil.copy('changelog.txt',
                         os.path.join(dest,
-                                     'changelog-{}.txt'.format(self.version)))
+                                     'changelog-{}.txt'.format(self.version_str)))
         except IOError:
             pass
         else:
@@ -137,12 +141,13 @@ class RepoUpdate(object):
                     yield Addon(addon_xml)
                 except ET.ParseError:
                     print("Skipping invalid addon.xml: {}".format(addon_xml))
-                
+
     def _needs_update(self, addon_id, version):
         if self._xml is not None:
             xpath = "addon[@id='{}']".format(addon_id, version)
             repo_addon = self._xml.find(xpath)
-            return repo_addon is None or repo_addon.attrib['version'] < version
+            return (repo_addon is None or
+                    version_parts(repo_addon.attrib['version']) < version)
         else:
             return True
 
