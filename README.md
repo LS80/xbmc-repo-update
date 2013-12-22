@@ -14,15 +14,18 @@ Usage
 
 repoupdate.py can be run as an executable script.
 
-    usage: repoupdate.py [-h] [-s SOURCE] [-r REPO]
-
+    usage: repoupdate.py [-h] [-s SOURCE] [-r REPO] [-f [ADDON ID]]
+    
     Update a local xbmc repository from a local add-on source directory
-
+    
     optional arguments:
       -h, --help            show this help message and exit
       -s SOURCE, --source SOURCE
                             path to the root of the add-on source directory
       -r REPO, --repo REPO  path to the root of the repository
+      -f [ADDON ID], --force [ADDON ID]
+                            force update all add-ons or force update only the
+                            specified add-on.
 
 
 Or you can import the RepoUpdate class.
