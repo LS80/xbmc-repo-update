@@ -160,8 +160,11 @@ class RepoUpdate(object):
             for addon in addons:
                 print("Found {}".format(addon.id))
                 element.append(addon.tree)
-                # Only update if the add-on has not already been released.
-                if self._needs_update(addon.id, addon.version) or force_update:
+                # Only update if the add-on has not already been released
+                # or the update is forced
+                if (self._needs_update(addon.id, addon.version) or 
+                    force_update is True or
+                    force_update == addon.id):
                     update_required = True
                     print("Releasing {}...".format(addon))
                     addon.create_release(self.repo_root)
@@ -190,8 +193,10 @@ if __name__ == '__main__':
                         help="path to the root of the add-on source directory")
     parser.add_argument('-r', '--repo',
                         help="path to the root of the repository")
-    parser.add_argument('-f', '--force', action='store_true',
-                        help="force update of the addons")
+    parser.add_argument('-f', '--force', nargs='?', const=True, default=False,
+                        metavar='ADDON ID',
+                        help="force update all add-ons "
+                             "or force update only the specified add-on.")   
     
     args = parser.parse_args()
 
