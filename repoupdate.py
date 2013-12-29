@@ -67,7 +67,9 @@ class Addon(object):
         for root, dirs, files in os.walk(self._path):
             for f in files:
                 if os.path.splitext(f)[1] in self.EXTS:
-                    z.write(os.path.join(root, f))
+                    path_orig = os.path.join(root, f)
+                    path_zip = os.path.join(self.id, os.path.relpath(root, self._path), f)
+                    z.write(path_orig, path_zip)
         z.close()
         
     def create_release(self, path):
@@ -134,9 +136,9 @@ class RepoUpdate(object):
             self._xml = None
         
     def _addons(self):
-        for addon in os.walk(self.source_root).next()[1]:
-            addon_xml = os.path.join(addon, 'addon.xml')
-            if os.path.isfile(addon_xml):
+        for root, dirs, filenames in os.walk(self.source_root):
+            if 'addon.xml' in filenames:
+                addon_xml = os.path.join(root, 'addon.xml')
                 try:
                     yield Addon(addon_xml)
                 except ET.ParseError:
