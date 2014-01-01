@@ -1,7 +1,9 @@
 xbmc-repo-update
 ================
 
-repoupdate.py provides the RepoUpdate class for updating a local xbmc add-on repository from a local add-on source directory. The repository path defaults to a folder in your Dropbox Public folder called 'Repo' which can then serve as an xbmc repository at dl.dropboxusercontent.com/u/\<userid\>/Repo/.
+**repoupdate.py updates a local xbmc add-on repository from a local add-on source directory. It will find all the add-ons in the source directory which are newer than in the repository, then create all the required files, and update the addons.xml file accordingly.**
+
+The repository path defaults to a folder in your Dropbox Public folder called 'Repo' which can then serve as an xbmc repository at dl.dropboxusercontent.com/u/\<userid\>/Repo/.
 
 This has been tested on Linux and Windows. Python 2.7 is the only requirement.
 
