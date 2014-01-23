@@ -137,7 +137,7 @@ class RepoUpdate(object):
         
     def _addons(self):
         for root, dirs, filenames in os.walk(self.source_root):
-            if 'addon.xml' in filenames:
+            if 'addon.xml' in filenames and '.repoignore' not in filenames:
                 addon_xml = os.path.join(root, 'addon.xml')
                 try:
                     yield Addon(addon_xml)
