@@ -153,8 +153,8 @@ class RepoUpdate(object):
         else:
             return True
 
-    def update(self, force_update=False):
-        update_required = False
+    def update(self, force_update=False, force_xml=False):
+        update_required = force_xml
         addons = list(self._addons())
         if addons: 
             # Build xml tree and create release zip files as necessary
@@ -198,9 +198,11 @@ if __name__ == '__main__':
     parser.add_argument('-f', '--force', nargs='?', const=True, default=False,
                         metavar='ADDON ID',
                         help="force update all add-ons "
-                             "or force update only the specified add-on.")   
+                             "or force update only the specified add-on.")
+    parser.add_argument('-F', '--force-xml', action='store_true',
+                        help="force only the recreation of addons.xml")
     
     args = parser.parse_args()
 
     repo = RepoUpdate(args.source, args.repo)
-    repo.update(args.force)
+    repo.update(args.force, args.force_xml)
