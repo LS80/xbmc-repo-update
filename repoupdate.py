@@ -177,9 +177,9 @@ class RepoUpdate(object):
                 xml_md5 = hashlib.md5(xml).hexdigest()
                 
                 # Update addons.xml and addons.xml.md5
-                for file, content in (('addons.xml', xml),
-                                      ('addons.xml.md5', xml_md5)):
-                    path = os.path.join(self.repo_root, file)
+                for f, content in (('addons.xml', xml),
+                                   ('addons.xml.md5', xml_md5)):
+                    path = os.path.join(self.repo_root, f)
                     open(path, 'w').write(content)
                     print("Updated {}".format(path))
             else:
