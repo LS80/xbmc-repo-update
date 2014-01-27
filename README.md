@@ -28,6 +28,7 @@ repoupdate.py can be run as an executable script.
       -f [ADDON ID], --force [ADDON ID]
                             force update all add-ons or force update only the
                             specified add-on.
+      -F, --force-xml       force only the recreation of addons.xml
 
 
 Or you can import the RepoUpdate class.
