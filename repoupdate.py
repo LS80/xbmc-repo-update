@@ -47,7 +47,7 @@ def version_parts(version):
 class Addon:
     """A class representing an add-on in the source directory"""
 
-    EXTS = (".py", ".xml", ".jpg", ".png", ".txt")
+    EXTS = (".py", ".xml", ".jpg", ".png", ".txt", ".po")
 
     def __init__(self, xml_file):
         self.tree = ET.parse(xml_file).getroot()
